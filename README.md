@@ -19,3 +19,50 @@ Complete Sentence Predictor
 5. Type-> cd D:\JavaTools\MongoDB\mongodb-win32-i386-3.2.14-22-ge11e3c1\bin
 
 6. Then type-> mongo
+
+# Queries:
+## For DataSet (FORM 1):
+```
+{
+  _id : "word",
+  "value1" : count1,
+  "value2" : count2,
+  "value3" : count3
+}
+
+Example: 
+{
+  _id : "hello",
+  "everyone" : 15,
+  "all" : 4
+}
+```
+### Query: To insert in above data format:
+```
+  db.COLLECTION_NAME.insert({_id:"hello", "everyone":15, "all":4})
+  
+  //You cannot use insertMany() method here
+  
+  Result: {
+            _id : "hello",
+            "everyone" : 15,
+            "all" : 4
+          }
+```
+### Query: To find all the values for a given word:
+```
+  db.COLLECTION_NAME.find({_id:"hello"},{_id:0})
+  
+  //Above query finds and returns the whole document with the _id field omitted
+  
+  Result: {"everyone" : 15, "all" : 4}
+```
+
+### Query: To increment count of a particular value:
+```
+  db.COLLECTION_NAME.update({_id:"hello"},{$inc:{"all":1}})
+  
+  //Above query will increment the count of value "all" and leaves every other value as it is
+  
+  Result: {"everyone" : 15, "all" : 5}
+```
