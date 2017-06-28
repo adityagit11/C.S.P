@@ -229,9 +229,7 @@ To update the count field in the above document:
     }
   Result: 
       { "_id" : 11, "KEY" : "VALUE", "count" : 8.0 }
-      { "_id" : 12, "Value" : "Count" }
         *****************
       { "_id" : 11, "KEY" : "VALUE", "count" : 9.0 }
-      { "_id" : 12, "Value" : "Count" }
   
 ```
