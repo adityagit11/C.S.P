@@ -68,9 +68,8 @@ Example:
 ```
 
 # Mongo-Java-Client
-## Code Snip Snip!
 
-### Code : To Connect to a client:
+## Code : To Connect to a client:
 ```
   MongoClient mongoClient = new MongoClient();
   or
@@ -83,18 +82,18 @@ Example:
   MongoClient mongoClient = new MongoClient(connectionString);
 ```
 
-### Code : To disconnect from a client:
+## Code : To disconnect from a client:
 ```
   mongoClient.close();
 ```
 
-### Code : To create/ GET database:
+## Code : To create/ GET database:
 If a database does not exist, MongoDB creates the database when you first store data for that database.
 ```
   MongoDatabase database = mongoClient.getDatabase("DATABASE_NAME");
 ```
 
-### Code : To create/ GET collection (inside a database):
+## Code : To create/ GET collection (inside a database):
 If a collection does not exist, MongoDB creates the collection when you first store data for that collection.
 ```
   MongoCollection<Document> collection = database.getCollection("COLLECTION_NAME");
@@ -111,7 +110,7 @@ Each document looks something like this:
   }
 ```
 
-### Code: To create an document:
+## Code: To create an document:
 To create an document like above:
 ```
   Document doc = new Document().append("KEY", "VALUE");
@@ -135,19 +134,19 @@ Our project required automatic updating the document
 
 ```
 
-### Code: To insert a document into the collection
+## Code: To insert a document into the collection
 Once you have the MongoCollection object, you can insert documents into the collection.
 If there is no field by key: _id then mongodb adds its own _id element
 ```
   collection.insertOne(doc);
 ```
 
-### Code: To count the documents into a collection
+## Code: To count the documents into a collection
 ```
   System.out.println(collection.count());
 ```
 
-### Code: To query the collection
+## Code: To query the collection
 You have to use method find() which returns FindIterable<Document> Type
 1. Method by for each
 ```
@@ -178,4 +177,61 @@ You have to use method find() which returns FindIterable<Document> Type
     System.out.println(each);
   }
 ```
-### Code: To add filter to query
+## Code: To add filter to query
+### Get Documents which matches a filter
+It creates a filter matching documents where field name equals specified values.
+```
+  FindIterable<Document> resultDoc = collection.find(eq("_id",11));
+```
+
+### To add projections:
+```
+  FindIterable<Document> resultDoc =
+		collection.find(eq("_id",11)).projection(new Document("_id",0));
+    
+  is equivalent to:
+  db.COLLECTION_NAME.find({"_id":11},{"_id":0})
+```
+
+## Code: To update documents
+Suppose you have a document:
+```
+  {
+    "_id" : 11,
+    "KEY" : "VALUE",
+    "count" : 8
+  }
+```
+To update the count field in the above document:
+```
+  MongoDB Shell CodE: db.COLLECTION_NAME.update({"_id":11},{$inc:{"count":1}})
+  
+  Java CodE: 
+    FindIterable<Document> resultDoc = null;
+    resultDoc = collection.find();
+    for(Document each : resultDoc)
+    {
+    	System.out.println(each.toJson());
+    }
+    
+    System.out.println("*****************");
+    
+    Document fieldToUpdateDoc = new Document("count", 1);
+    Document projectDoc = new Document("$inc", fieldToUpdateDoc);
+    Document queryDoc = new Document("_id", 11);
+    collection.updateOne(queryDoc, projectDoc);
+    
+    
+    resultDoc = collection.find();
+    for(Document each : resultDoc)
+    {
+    	System.out.println(each.toJson());
+    }
+  Result: 
+      { "_id" : 11, "KEY" : "VALUE", "count" : 8.0 }
+      { "_id" : 12, "Value" : "Count" }
+        *****************
+      { "_id" : 11, "KEY" : "VALUE", "count" : 9.0 }
+      { "_id" : 12, "Value" : "Count" }
+  
+```
