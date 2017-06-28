@@ -66,3 +66,109 @@ Example:
   
   Result: {"everyone" : 15, "all" : 5}
 ```
+
+# Mongo-Java-Client
+## Code Snip Snip!
+
+### Code : To Connect to a client:
+```
+  MongoClient mongoClient = new MongoClient();
+  or
+  MongoClient mongoClient = new MongoClient("localhost");
+  or
+  MongoClient mongoClient = new MongoClient("localhost", 27017);
+  or
+  //USING CONNECTION STRING/ URI
+  MongoClientURI connectionString = new MongoClientURI("mongodb://localhost:27017");
+  MongoClient mongoClient = new MongoClient(connectionString);
+```
+
+### Code : To disconnect from a client:
+```
+  mongoClient.close();
+```
+
+### Code : To create/ GET database:
+If a database does not exist, MongoDB creates the database when you first store data for that database.
+```
+  MongoDatabase database = mongoClient.getDatabase("DATABASE_NAME");
+```
+
+### Code : To create/ GET collection (inside a database):
+If a collection does not exist, MongoDB creates the collection when you first store data for that collection.
+```
+  MongoCollection<Document> collection = database.getCollection("COLLECTION_NAME");
+```
+It returns a collection of documents
+Each document looks something like this:
+```
+  {
+   "name" : "MongoDB",
+   "type" : "database",
+   "count" : 1,
+   "versions": [ "v3.2", "v3.0", "v2.6" ],
+   "info" : { x : 203, y : 102 }
+  }
+```
+
+### Code: To create an document:
+To create an document like above:
+```
+  Document doc = new Document().append("KEY", "VALUE");
+  System.out.println(doc);
+  
+  Result: Document{{KEY=VALUE}}
+```
+KEY - String Type
+VALUE - Object Type
+
+
+Our project required automatic updating the document
+```
+  for(int i = 0, j = 9;i<10&&j>-1;i++,j--)
+  {
+    doc.append(new Integer(i).toString(), new Integer(j).toString());
+  }
+  System.out.println(doc);
+  
+  Result: Document{{KEY=VALUE, 0=9, 1=8, 2=7, 3=6, 4=5, 5=4, 6=3, 7=2, 8=1, 9=0}}
+
+```
+
+### Code: To insert a document into the collection
+Once you have the MongoCollection object, you can insert documents into the collection.
+If there is no field by key: _id then mongodb adds its own _id element
+```
+  collection.insertOne(doc);
+```
+
+### Code: To count the documents into a collection
+```
+  System.out.println(collection.count());
+```
+
+### Code: To query the collection
+You have to use method find() which returns Document(s)
+1. Method by for each
+```
+  for(Document eachDocument : collection.find())
+  {
+    System.out.println(each.toJson());
+  }
+  
+  Result (Sample) : { "_id" : 11, "KEY" : "VALUE" } 
+```
+2. Method by MongoCursor<Document>
+```
+    MongoCursor<Document> cursor = collection.find().iterator();
+    try
+    {
+    	while(cursor.hasNext())
+    		System.out.println(cursor.next().toJson());
+    }
+    finally{
+    	cursor.close();
+    }
+```
+
+### Code: To add filter to query
