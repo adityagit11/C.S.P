@@ -67,6 +67,15 @@ Example:
   Result: {"everyone" : 15, "all" : 5}
 ```
 
+### Query: To increment count of a particular value which is not present:
+If you try to increment count of some variable which is not present at the moment in collection then it automatically gets added to database.
+```
+  db.COLLECTION_NAME.update({_id:"hello"},{$inc:{"okay":1}})
+  
+  Result: Result: {"everyone" : 15, "all" : 5, "okay" : 1}
+```
+
+
 # Mongo-Java-Client
 
 ## Code : To Connect to a client:
