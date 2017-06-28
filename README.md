@@ -148,7 +148,7 @@ If there is no field by key: _id then mongodb adds its own _id element
 ```
 
 ### Code: To query the collection
-You have to use method find() which returns Document(s)
+You have to use method find() which returns FindIterable<Document> Type
 1. Method by for each
 ```
   for(Document eachDocument : collection.find())
@@ -156,7 +156,7 @@ You have to use method find() which returns Document(s)
     System.out.println(each.toJson());
   }
   
-  Result (Sample) : { "_id" : 11, "KEY" : "VALUE" } 
+  Result (Sample) : { "_id" : 11, "KEY" : "VALUE" }
 ```
 2. Method by MongoCursor<Document>
 ```
@@ -170,5 +170,12 @@ You have to use method find() which returns Document(s)
     	cursor.close();
     }
 ```
-
+3. Method by FindIterable<Document> Type
+```
+  FindIterable<Document> resultDoc = collection.find();
+  for(Document each : resultDoc)
+  {
+    System.out.println(each);
+  }
+```
 ### Code: To add filter to query
