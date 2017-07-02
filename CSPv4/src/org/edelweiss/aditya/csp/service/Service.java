@@ -52,8 +52,8 @@ public class Service extends HttpServlet implements ServletContextListener
 		mongoPatch = new MongoPatch();
 		
 		//upload data
-		//alienData = new DataInvasion(mongoPatch, datasetPath);
-		//alienData.Init();
+		alienData = new DataInvasion(mongoPatch, datasetPath);
+		alienData.Init();
 		
 		context.setAttribute("mongo-client", mongoPatch);
 	}

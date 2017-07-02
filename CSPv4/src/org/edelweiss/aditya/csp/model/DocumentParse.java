@@ -1,6 +1,5 @@
 package org.edelweiss.aditya.csp.model;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +10,7 @@ import org.bson.Document;
 
 /*
  * ALGORITHM MODEL: 4 CLASS: 3 
- * Date: 6/30/2017
+ * Date: 30/June/2017
  * Author: Aditya Singh
  * Designation: Intern
  * Organisation: Edelweiss

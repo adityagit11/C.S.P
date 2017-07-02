@@ -64,8 +64,8 @@ public class MongoPatch
 		Document doc = new Document().append("_id", word);
 		for(int i = 0;i<LENGTH;i++)
 		{
-			//doc.append(valueAr[i], Integer.parseInt(countAr[i]));
-			doc.append(valueAr[i], 1);
+			doc.append(valueAr[i], Integer.parseInt(countAr[i]));
+			//doc.append(valueAr[i], 1);
 		}
 		return doc;
 	}
